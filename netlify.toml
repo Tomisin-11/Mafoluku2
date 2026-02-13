@@ -1,0 +1,20 @@
+[build]
+  command   = "npm install && npm run build"
+  publish   = "dist"
+  functions = "netlify/functions"
+
+# Install server dependencies as part of the Netlify build
+[build.environment]
+  NODE_VERSION = "18"
+
+# Redirect /api/* → serverless function
+[[redirects]]
+  from   = "/api/*"
+  to     = "/.netlify/functions/api/:splat"
+  status = 200
+
+# SPA fallback — serve index.html for all non-file routes
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
